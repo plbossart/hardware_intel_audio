@@ -1,6 +1,6 @@
 #
 #
-# Copyright (C) Intel 2013-2015
+# Copyright (C) Intel 2013-2016
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ component_export_includes := \
 component_includes_common := \
     $(component_export_includes) \
     external/tinyalsa/include \
-    frameworks/av/include/media \
+    frameworks/av/include/media
 
 component_includes_dir := \
     hw \
@@ -63,7 +63,7 @@ component_static_lib := \
     libproperty \
     audio.routemanager.includes \
     libaudioparameters \
-    libevent-listener_static
+    libevent-listener_static \
 
 component_static_lib_host := \
     $(foreach lib, $(component_static_lib), $(lib)_host) \
@@ -89,7 +89,7 @@ LOCAL_STATIC_LIBRARIES := $(component_static_lib)
 LOCAL_CFLAGS := $(component_cflags)
 
 LOCAL_SHARED_LIBRARIES := \
-    libparameter
+    libparameter \
 
 ifneq ($(strip $(PFW_CONFIGURATION_FOLDER)),)
 LOCAL_CFLAGS += -DPFW_CONF_FILE_PATH=\"$(PFW_CONFIGURATION_FOLDER)\"
@@ -116,7 +116,7 @@ include $(BUILD_PREBUILT)
 
 #######################################################################
 # Component Host Build
-
+ifeq (0,1)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libaudioplatformstate_host
@@ -140,7 +140,7 @@ LOCAL_SHARED_LIBRARIES := \
 include $(OPTIONAL_QUALITY_COVERAGE_JUMPER)
 
 include $(BUILD_HOST_STATIC_LIBRARY)
-
+endif
 #######################################################################
 
 include $(OPTIONAL_QUALITY_ENV_TEARDOWN)

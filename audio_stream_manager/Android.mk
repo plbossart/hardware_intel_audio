@@ -25,9 +25,9 @@ include $(OPTIONAL_QUALITY_ENV_SETUP)
 # Common variables
 
 component_src_files :=  \
+    src/Device.cpp \
     src/Stream.cpp \
     src/audio_hw.cpp \
-    src/Device.cpp \
     src/StreamIn.cpp \
     src/StreamOut.cpp \
     src/CompressedStreamOut.cpp \
@@ -114,6 +114,7 @@ LOCAL_MODULE_TAGS := optional
 
 LOCAL_REQUIRED_MODULES := \
     audio.primary.$(TARGET_BOARD_PLATFORM) \
+    libroute-subsystem \
     liblpepreprocessing \
     route_criteria.conf
 
@@ -143,7 +144,7 @@ include $(BUILD_SHARED_LIBRARY)
 
 #######################################################################
 # Component Host Build
-
+ifeq (0,1)
 include $(CLEAR_VARS)
 
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/src
@@ -162,7 +163,7 @@ LOCAL_MODULE_OWNER := intel
 include $(OPTIONAL_QUALITY_COVERAGE_JUMPER)
 
 include $(BUILD_HOST_STATIC_LIBRARY)
-
+endif
 
 # Target Component functional test
 #######################################################################
@@ -175,17 +176,19 @@ LOCAL_C_INCLUDES := \
         $(TARGET_OUT_HEADERS)/parameter \
         frameworks/av/include \
         system/media/audio_utils/include \
-        system/media/audio_effects/include \
+        system/media/audio_effects/include
 
 LOCAL_STATIC_LIBRARIES := \
         libaudioparameters \
         libaudio_comms_utilities \
         libaudio_comms_convert \
         libmedia_helper \
+        libutils
 
 LOCAL_SHARED_LIBRARIES := \
         libhardware \
         liblog \
+        libcutils libutils
 
 LOCAL_MODULE := audio-hal-functional_test
 LOCAL_MODULE_OWNER := intel
@@ -198,6 +201,7 @@ include $(BUILD_NATIVE_TEST)
 
 # Component functional test for HOST
 #######################################################################
+ifeq (0,1)
 include $(CLEAR_VARS)
 
 LOCAL_SRC_FILES:= test/FunctionalTestHost.cpp
@@ -231,6 +235,7 @@ include $(OPTIONAL_QUALITY_COVERAGE_JUMPER)
 # Cannot use $(BUILD_HOST_NATIVE_TEST) because of compilation flag
 # misalignment against gtest mk files
 include $(BUILD_HOST_EXECUTABLE)
+endif
 
 #######################################################################
 # Build for configuration file
