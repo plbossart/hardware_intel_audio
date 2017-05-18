@@ -16,6 +16,7 @@
 # limitations under the License.
 #
 
+ifeq ($(BOARD_USES_GENERIC_AUDIO), false)
 ifeq ($(INTEL_AUDIO_HAL),audio_pfw)
 
 LOCAL_PATH := $(call my-dir)
@@ -48,3 +49,4 @@ include $(call named-subdir-makefiles, $(SUBDIRS))
 include $(OPTIONAL_QUALITY_ENV_TEARDOWN)
 
 endif # INTEL_AUDIO_HAL
+endif # BOARD_USES_GENERIC_AUDIO
